@@ -1,0 +1,172 @@
+FTDAP LEAN VERIFICATION
+Repository verification: see the generated verification.json and GitHub Actions run.
+
+SCOPE
+
+The full FTAP is formalized for the manuscript's finite-horizon model of
+finite-dimensional, locally finite discounted price states, with the stated
+bounded-price localizers and the usual completeness/right-continuity conditions.
+The source process may have exceptional non-cadlag paths on a null set and may
+originally be defined only on the compact interval [0,T]. The formalization
+constructs its finite active jump model from those source assumptions.
+
+The final equivalence is:
+  no arbitrage (NA)
+  <-> no free lunch with vanishing risk (NFLVR)
+  <-> no free lunch (NFL)
+  <-> existence of an equivalent local martingale probability measure.
+
+Under NA the actual admissible trading cone is weak-star closed. Bounded
+source prices have an equivalent true martingale measure. Admissible strategies
+are arbitrary finite-valued predictable vector holdings with a deterministic
+lower wealth bound; no boundedness or integrability of the holdings is imposed.
+
+MAIN ENTRY POINTS
+
+CompactSourceFTAP.lean:
+  FTDAP.compact_horizon_ftap
+  FTDAP.compact_horizon_bounded_ftap
+  FTDAP.CompactPriceHypotheses.toSource
+
+These start with CompactPriceHypotheses, which states adaptedness, almost-sure
+cadlag paths on the compact subtype, deterministic initial price, locally
+finite states, and bounded stopping localizers. The explicit real-time
+extension equals the original process at every horizon time. No regularity
+outside that interval is assumed.
+
+SourceFTAP.lean:
+  FTDAP.source_price_ftap_with_constructed_model
+  FTDAP.PriceJumpModel.source_price_ftap
+
+These give all four equivalences and weak-star cone closedness, with the
+original almost-sure real-indexed source process recovered after regularizing
+exceptional paths. No measurable jump enumeration is assumed as input.
+
+BoundedPriceFTAP.lean:
+  FTDAP.PriceJumpModel.bounded_source_price_ftap
+
+DiscretePriceFTAP.lean:
+  FTDAP.PriceJumpModel.discrete_price_ftap
+
+This intermediate theorem gives both directions for everywhere-cadlag source
+prices. Its source hypotheses contain no assumed cone closedness, separator,
+or main FTAP implication.
+
+CORRESPONDENCE WITH THE ARGUMENT
+
+1. Cadlag paths in locally finite states have finitely many jumps on a compact
+   horizon: CadlagDiscrete, ContinuousExit, ExitIteration, ActiveJumps,
+   ExitRepresentation, OrderedActiveJumps, NonnegativeJumpData.
+   NullPathRepair and AlmostSureTrading construct the original price model.
+
+2. Finite-dimensional geometry, including existence of the maximal separator
+   and the zero-face argument: Geometry and FiniteSelection. Predictable
+   selection and common portfolio reduction: FinitePortfolioReduction,
+   LocalPortfolioReduction, ReductionFromPrices.
+
+3. The common product envelope and the strategy-independent weighted measure:
+   SourceEnvelopeBound, SourceWeightedMeasure, PriceHilbertReduction,
+   PriceLpRepresentatives. The actual reduced portfolios satisfy the proved
+   Hilbert norm bound; it is not supplied as an external assumption.
+
+4. Hilbert convex-tail compactness, atomwise finite-gain convergence and actual
+   bounded claim-slice closedness: ConvexTail, JumpCompactness, AtomGainLimits,
+   GainDominationCompactness, ClaimSliceClosed, L2WeakStarClosed,
+   SourceClaimSlices.
+
+5. L-infinity / L1-dual representation and topology: L1DualPreparation,
+   L1DualBound, L1DualRepresentation, ClaimDuality. Full Krein--Smulian:
+   KreinSmulian, with finite detector and null-sequence separation modules.
+   Global actual trading-cone closedness follows in TradingConeClosed.
+   Krein--Smulian is proved here, rather than assumed as a missing library fact.
+
+6. Kreps--Yan and the normalized strictly positive density: WeakStar,
+   KrepsYan, DensitySeries, PositiveDensity, EquivalentMeasure.
+   Rectangle tests and stopped price martingales: SeparatedGains,
+   SeparatedRectangles, SeparatedMartingale, LocalMartingaleFromSeparator.
+   ForwardFTAP assembles NA -> equivalent local martingale probability.
+
+7. The converse is proved independently for arbitrary admissible holdings.
+   AtomicIntegral, BalancedAtomicGains, PredictableMeasureUniqueness and
+   PredictableAtomBalance prove the signed predictable-measure argument.
+   BoundedVariationCoordinateGains and BoundedVariationGains give zero mean
+   for bounded predictable portfolios. FirstOversizedTrade and
+   TruncatedHoldings prove predictable truncation, omission of the first
+   oversized jump, preservation of the same lower gain bound, and eventual
+   equality with the original finite path. BoundedVariationNA applies Fatou.
+
+8. StoppingGrid and ContinuousOptionalSampling extend countable-range optional
+   sampling to arbitrary bounded continuous-time stopping times, using right
+   continuity and uniform integrability of terminal conditional expectations.
+   ContinuousStoppedMartingale, VectorStoppedMartingale and
+   RefinedMartingaleStops establish the needed martingale refinements.
+   TailJumpLocalizers retain at most n+1 jumps and eventually retain every
+   finite path. LocalizedJumpVariation obtains deterministic variation bounds
+   from these stops and the source price bounds. LocalizedVariationNA and
+   ConverseFTAP finish local martingale -> NA, including unbounded holdings.
+
+9. ModelTransport and LocalMartingaleVersions transport equivalent measures
+   and indistinguishable price versions. NoArbitrageEquivalences uses the
+   actual norm and weak-star closures for NFLVR and NFL. SourceFTAP assembles
+   the full theorem. BoundedLocalMartingale supplies the bounded-price clause.
+   CompactHorizonPaths and CompactPriceExtension discharge the compact-domain
+   extension and adaptedness obligations used by CompactSourceFTAP.
+
+ASSUMPTIONS AND AXIOMS
+
+All hypotheses remain explicit in the final Lean statements. Completeness
+means that every ambient null set belongs to every filtration sigma-algebra.
+The localizers are increasing finite stopping times eventually equal to T
+almost surely, as specified in the manuscript. Martingale and conditional
+expectation assertions use mathlib definitions; HorizonLocalMartingale records
+these martingales on the closed finite horizon with explicit stopping times.
+
+AllChecks.lean audits 323 distinct declarations by printing their transitive
+axiom dependencies. The allowed standard dependencies are propext,
+Classical.choice and Quot.sound. No proof placeholders, additional axioms,
+or unsafe declarations are permitted by the source scanner.
+
+REPRODUCTION
+
+From the repository root, with elan and Python 3.9 or newer installed:
+  lake exe cache get
+  python3 scripts/verify.py
+
+The standard Lake build compiles all 127 source modules under src/ with
+warnings treated as errors. The verification script then recompiles
+src/AllChecks.lean and checks that exactly 323 declarations are present and
+that their transitive dependencies use only the allowed standard axioms.
+Build output is saved in build.log; the axiom output in verification.log;
+the success report, including source hashes, in verification.json. These
+machine-generated files are ignored by Git and uploaded as CI artifacts.
+A new run removes any stale success report before building.
+
+Lean: leanprover/lean4:v4.34.0
+Mathlib commit: 5ed2965256430c3649e86755f9576b54eca72435
+lake-manifest.json also pins the transitive dependency revisions. Dependencies
+are fetched into .lake/packages; no other local project is required.
+
+Pinned mathlib aliases retain their source license headers. Their upstream
+origins, import substitutions and modifications are recorded in
+PINNED_MODULES.txt and NOTICE. Some convex-tail and Fatou arguments were
+adapted from the author's stochastic-analysis-lean project (Apache 2.0).
+All proof source files were preserved when this Lake package was prepared.
+
+MANUSCRIPT
+
+Reference manuscript (not distributed in this code repository):
+  Masaaki Fukasawa, Fundamental Theorem of Discrete Asset Pricing
+  ftap_integer_grid_note.tex
+  SHA256 bbe4ed174c6fd063c07ccb979ea5db71e64d3b1324412702445792f989a0efc8
+The repository packaging does not modify the manuscript.
+
+PRIMARY SOURCES CONSULTED
+
+Kabanov, On the FTAP of Kreps--Delbaen--Schachermayer, Lemma 2.1 and Appendix F:
+https://ykabanov.perso.math.cnrs.fr/pdf/61(WSDISTR).pdf
+Beiglbock--Schachermayer--Veliyev, A short proof of the Doob--Meyer theorem,
+Section 2.1: https://arxiv.org/pdf/1012.5292
+Lurie, Functional Analysis lecture 12, weak-star convex closedness:
+https://www.math.ias.edu/~lurie/261ynotes/lecture12.pdf
+Pinned mathlib sources in the local dependency cache and public documentation:
+https://leanprover-community.github.io/mathlib4_docs/

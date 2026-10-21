@@ -1,0 +1,28 @@
+Pinned mathlib source modules for weak-star compactness and optional sampling.
+Revision: 5ed2965256430c3649e86755f9576b54eca72435
+Import names use local aliases below. Licenses retained.
+PinnedNormedDual: the zero-scalar polar proof uses an explicit extensional
+zero identity to accommodate module-definition transparency in this build.
+
+PinnedPolar.lean <- Mathlib.Analysis.LocallyConvex.Polar (original SHA256 110f26e2d5eaa62043d78c5204e8bf1e27d6fd0b1f6a21224b777cffcb7a6d4c)
+PinnedTotallyBounded.lean <- Mathlib.Analysis.Convex.TotallyBounded (original SHA256 a8431ddf1f9bbd3fc59770f8992fefaf248e77b0607ce0029febe83843f253e8)
+PinnedAbsConvex.lean <- Mathlib.Analysis.LocallyConvex.AbsConvex (original SHA256 9be6d331ccdcf4d8bfa18ef6843ed3d17e9b100119cc2debf2cf33fa5b3aa42e)
+PinnedNormedDual.lean <- Mathlib.Analysis.Normed.Module.Dual (original SHA256 69c95f25bae3cefca0480b8e4551e489827e0b9b65ba1cea6d62b9c68fe91789)
+PinnedCompleteness.lean <- Mathlib.Analysis.Normed.Operator.Completeness (original SHA256 1df880ce398ee03e28f0636b5b86866a87361778857de2bb7685546eb009a856)
+PinnedWeakDual.lean <- Mathlib.Analysis.Normed.Module.WeakDual (original SHA256 f6a309042d8de9f540def9c4d1b5d17351e465ec7804db9f9234cf78d11acfd4)
+
+PinnedOptionalSampling.lean <- Mathlib.Probability.Martingale.OptionalSampling (original SHA256 09e78f237f93ec3d3e31d5cb8be666d8dbc775352b9e7ded6582faeeec04565a)
+
+CadlagBase.lean <- Mathlib.Topology.Order.Cadlag (original SHA256 3d3a6f749b469d3b72f5cfe4b72731bb399d1de539fb697a946ae755d24f8cb9)
+This file is identical to the pinned upstream source.
+
+RealBidual.lean adapts the real-space isometry argument from
+Mathlib.Analysis.Normed.Module.DoubleDual; its source header records authorship
+and Apache 2.0 licensing.
+
+All upstream paths refer to:
+https://github.com/leanprover-community/mathlib4/tree/5ed2965256430c3649e86755f9576b54eca72435
+
+The Pinned*.lean aliases substitute local alias imports for their corresponding
+upstream imports. Apart from these import changes, PinnedNormedDual contains
+the proof adjustment described above. PinnedOptionalSampling is unmodified.

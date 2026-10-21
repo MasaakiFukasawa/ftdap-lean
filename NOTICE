@@ -1,0 +1,27 @@
+Fundamental Theorem of Discrete Asset Pricing — Lean formalization
+Masaaki Fukasawa, 2026
+
+This repository includes and adapts code from mathlib4, licensed under the
+Apache License, Version 2.0. Upstream copyright and author notices are retained
+in the corresponding source files:
+
+  src/CadlagBase.lean
+  src/PinnedAbsConvex.lean
+  src/PinnedCompleteness.lean
+  src/PinnedNormedDual.lean
+  src/PinnedOptionalSampling.lean
+  src/PinnedPolar.lean
+  src/PinnedTotallyBounded.lean
+  src/PinnedWeakDual.lean
+  src/RealBidual.lean
+
+Pinned revision, upstream module paths, original hashes and changes are
+documented in PINNED_MODULES.txt. Import aliases and the modified proof in
+PinnedNormedDual are local adaptations. RealBidual specializes an upstream
+bidual isometry argument to real spaces.
+
+Some convex-tail and Fatou arguments were adapted from the author's
+stochastic-analysis-lean project, distributed under Apache 2.0.
+
+Research supported by JSPS KAKENHI Grant Number 25K07112.
+OpenAI Codex assisted with formalization and repository preparation.

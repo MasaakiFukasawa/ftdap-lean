@@ -1,0 +1,12 @@
+.lake/
+.DS_Store
+__pycache__/
+*.pyc
+*.olean
+*.olean.*
+*.ilean
+*.ir
+*.ir.sig
+build.log
+verification.log
+verification.json

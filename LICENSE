@@ -1,0 +1,10 @@
+Licensing scope
+
+No additional license has yet been selected for the original code and
+documentation in this repository. Publication or access to this repository
+does not by itself grant a license to that material.
+
+The mathlib-derived files listed in NOTICE, and adaptations from the
+Apache-licensed stochastic-analysis-lean project, retain their Apache License,
+Version 2.0 terms. The full license is provided in LICENSES/Apache-2.0.txt.
+Their existing copyright and author notices are preserved in the sources.

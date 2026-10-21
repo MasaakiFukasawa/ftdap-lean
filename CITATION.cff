@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this formalization, please cite this repository and the accompanying paper."
+type: software
+title: "Fundamental Theorem of Discrete Asset Pricing: Lean formalization"
+authors:
+  - family-names: Fukasawa
+    given-names: Masaaki
+repository-code: "https://github.com/MasaakiFukasawa/ftdap-lean"
+version: 0.1.0
